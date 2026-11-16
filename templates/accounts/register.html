@@ -1,0 +1,25 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<h1>Create Your Account</h1>
+
+<p>Join Kaon and get started.</p>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Register</button>
+
+</form>
+
+<p>
+    Already have an account?
+    <a href="{% url 'login' %}">Login here</a>
+</p>
+
+{% endblock %}

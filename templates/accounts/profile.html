@@ -1,0 +1,50 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<h1>My Profile</h1>
+
+{% if edit_mode %}
+
+    <h3>Edit Your Information</h3>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ user_form.as_p }}
+
+        {{ profile_form.as_p }}
+
+        <button type="submit">Save Changes</button>
+
+    </form>
+
+    <p>
+        <a href="{% url 'profile' %}">Cancel</a>
+    </p>
+
+{% else %}
+
+    <p><strong>Username:</strong> {{ user.username }}</p>
+
+    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+
+    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <p><strong>Contact Number:</strong> {{ profile.contact_number|default:"Not provided" }}</p>
+
+    <p><strong>Role:</strong> {{ profile.get_role_display }}</p>
+
+    <hr>
+
+    <a href="{% url 'edit_profile' %}" class="btn">
+        Edit Profile
+    </a>
+
+{% endif %}
+
+{% endblock %}

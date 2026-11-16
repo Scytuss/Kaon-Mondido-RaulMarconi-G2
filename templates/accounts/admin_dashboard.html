@@ -1,0 +1,25 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<h1>Admin Dashboard</h1>
+
+<p>Welcome, {{ user.first_name }}!</p>
+
+<p>You are logged in as an Administrator.</p>
+
+<hr>
+
+<h3>Administrator Navigation</h3>
+
+<ul>
+    <li><a href="{% url 'profile' %}">View Profile</a></li>
+    <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+</ul>
+
+<p>
+    You have access to the Admin Dashboard.
+</p>
+
+{% endblock %}

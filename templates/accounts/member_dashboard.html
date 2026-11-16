@@ -1,0 +1,25 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<h1>Member Dashboard</h1>
+
+<p>Welcome, {{ user.first_name }}!</p>
+
+<p>You are logged in as a Kaon Member.</p>
+
+<hr>
+
+<h3>Member Navigation</h3>
+
+<ul>
+    <li><a href="{% url 'profile' %}">View Profile</a></li>
+    <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+</ul>
+
+<p>
+    Welcome to your Kaon account!
+</p>
+
+{% endblock %}
