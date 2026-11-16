@@ -7,12 +7,7 @@ from .models import User, Profile
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
-
-    fieldsets = UserAdmin.fieldsets + (
-        ('Additional Information', {
-            'fields': ('email',)
-        }),
-    )
+    pass
 
 
 @admin.register(Profile)
