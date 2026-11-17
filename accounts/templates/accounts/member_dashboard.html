@@ -3,23 +3,134 @@
 
 {% block content %}
 
-<h1>Member Dashboard</h1>
+<!-- DASHBOARD HEADER -->
+<div class="dashboard-header">
 
-<p>Welcome, {{ user.first_name }}!</p>
+    <div>
+        <p class="welcome-label">YOUR KAON DASHBOARD</p>
 
-<p>You are logged in as a Kaon Member.</p>
+        <h1>
+            Welcome, {{ user.first_name|default:user.username }}!
+        </h1>
 
-<hr>
+        <p class="dashboard-subtitle">
+            Ready to KAON?
+        </p>
+    </div>
 
-<h3>Member Navigation</h3>
+    <div class="date-label">
+        Your personal food tracker.
+    </div>
 
-<ul>
-    <li><a href="{% url 'profile' %}">View Profile</a></li>
-    <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
-</ul>
+</div>
 
-<p>
-    Welcome to your Kaon account!
-</p>
+
+<!-- HERO SECTION -->
+<section class="hero-card">
+
+    <span class="hero-tag">YOUR HEALTH JOURNEY</span>
+
+    <h2>KAON well. KAON better. Stay KAONsistent(consistent).</h2>
+
+    <p>
+        From homemade Filipino dishes to your everyday karinderya meals,
+        Kaon is here to help you become more aware of what you eat
+        and work toward your daily nutrition goals.
+    </p>
+
+</section>
+
+
+<!-- OVERVIEW SECTION -->
+<div class="section-heading">
+
+    <div>
+        <h2>Your Overview</h2>
+        <p>A quick look at your Kaon account.</p>
+    </div>
+
+</div>
+
+
+<div class="dashboard-grid">
+
+    <div class="dashboard-card">
+
+        <div class="card-icon">🍚</div>
+
+        <h3>Meal Tracker</h3>
+
+        <p>
+            Keep track of what you KAON.
+        </p>
+
+    </div>
+
+
+    <div class="dashboard-card">
+
+        <div class="card-icon">🎯</div>
+
+        <h3>Daily Calorie Goal</h3>
+
+        <p>
+            Work toward your daily nutrional target as you KAON.
+        </p>
+
+    </div>
+
+
+    <div class="dashboard-card">
+
+        <div class="card-icon">🔥</div>
+
+        <h3>Tracking Streak</h3>
+
+        <p>
+            Keep up with what you KAON everyday.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- LOWER SECTION -->
+<div class="dashboard-bottom">
+
+    <div class="info-card">
+
+        <h3>Track your Filipino food.</h3>
+
+        <p>
+            Kaon focuses on the Filipino food you actually eat:
+            meals at home, daily baon, and dishes from local
+            karinderyas and street-side vendors.
+        </p>
+
+    </div>
+
+
+    <div class="info-card">
+
+        <h3>Your Account</h3>
+
+        <p>
+            Manage your personal information.
+        </p>
+
+        <br>
+
+        <a href="{% url 'profile' %}" class="btn-outline">
+            View Profile
+        </a>
+
+        <a href="{% url 'edit_profile' %}" class="btn">
+            Edit Profile
+        </a>
+
+    </div>
+
+</div>
 
 {% endblock %}

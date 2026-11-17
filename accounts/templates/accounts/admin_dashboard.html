@@ -3,23 +3,116 @@
 
 {% block content %}
 
-<h1>Admin Dashboard</h1>
+<div class="dashboard-header">
 
-<p>Welcome, {{ user.first_name }}!</p>
+    <div>
+        <p class="welcome-label">KAON ADMINISTRATION</p>
 
-<p>You are logged in as an Administrator.</p>
+        <h1>
+            Welcome, {{ user.first_name|default:user.username }}!
+        </h1>
 
-<hr>
+        <p class="dashboard-subtitle">
+            Manage your account and access your administrator tools.
+        </p>
+    </div>
 
-<h3>Administrator Navigation</h3>
+    <div class="admin-badge">
+        <span>●</span> Administrator
+    </div>
 
-<ul>
-    <li><a href="{% url 'profile' %}">View Profile</a></li>
-    <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
-</ul>
+</div>
 
-<p>
-    You have access to the Admin Dashboard.
-</p>
+
+<section class="admin-hero">
+
+    <div>
+        <span class="hero-tag">ADMINISTRATOR PANEL</span>
+
+        <h2>Welcome to Kaon Management</h2>
+
+        <p>
+            This is your administrative dashboard.
+            From here, you can access your account information
+            and administrator features.
+        </p>
+    </div>
+
+    <div class="admin-hero-icon">⚙️</div>
+
+</section>
+
+
+<div class="section-heading">
+    <div>
+        <h2>Account Management</h2>
+        <p>Manage your administrator account.</p>
+    </div>
+</div>
+
+
+<div class="dashboard-grid admin-grid">
+
+    <div class="dashboard-card">
+
+        <div class="card-icon">👤</div>
+
+        <h3>View Profile</h3>
+
+        <p>
+            Review your personal account information.
+        </p>
+
+        <a href="{% url 'profile' %}" class="btn admin-card-button">
+            View Profile
+        </a>
+
+    </div>
+
+
+    <div class="dashboard-card">
+
+        <div class="card-icon">✏️</div>
+
+        <h3>Edit Profile</h3>
+
+        <p>
+            Update your personal details and contact information.
+        </p>
+
+        <a href="{% url 'edit_profile' %}" class="btn admin-card-button">
+            Edit Profile
+        </a>
+
+    </div>
+
+
+    <div class="dashboard-card">
+
+        <div class="card-icon">🛡️</div>
+
+        <h3>Administrator Access</h3>
+
+        <p>
+            You are logged in with an administrator account.
+        </p>
+
+        <span class="admin-status">Administrator privileges</span>
+
+    </div>
+
+</div>
+
+
+<div class="info-card admin-note">
+
+    <h3>About Kaon</h3>
+
+    <p>
+        Kaon — Track Your Filipino Food! is designed to make
+        tracking Filipino meals and daily nutrition easier.
+    </p>
+
+</div>
 
 {% endblock %}

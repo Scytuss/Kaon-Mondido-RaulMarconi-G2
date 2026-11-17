@@ -3,23 +3,38 @@
 
 {% block content %}
 
-<h1>Create Your Account</h1>
+<div class="auth-wrapper">
 
-<p>Join Kaon and get started.</p>
+    <div class="auth-card">
 
-<form method="POST">
+        <div class="auth-heading">
+            <span class="auth-icon">🥗</span>
+            <p class="welcome-label">START YOUR JOURNEY</p>
+            <h1>Create Your Account</h1>
+            <p>Join Kaon and start keeping track of your Filipino meals.</p>
+        </div>
 
-    {% csrf_token %}
+        <form method="POST">
 
-    {{ form.as_p }}
+            {% csrf_token %}
 
-    <button type="submit">Register</button>
+            {{ form.as_p }}
 
-</form>
+            <button type="submit" class="btn auth-submit">
+                Create Account
+            </button>
 
-<p>
-    Already have an account?
-    <a href="{% url 'login' %}">Login here</a>
-</p>
+        </form>
+
+        <div class="auth-footer">
+            <p>
+                Already have an account?
+                <a href="{% url 'login' %}">Login here</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

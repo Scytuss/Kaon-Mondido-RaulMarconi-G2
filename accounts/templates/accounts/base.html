@@ -1,4 +1,5 @@
 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,103 +7,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kaon</title>
+    <title>Kaon - Track Your Filipino Food!</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7f2;
-            color: #26352b;
-        }
-
-        nav {
-            background: #285943;
-            padding: 18px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 15px;
-        }
-
-        .logo {
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        .container {
-            max-width: 650px;
-            margin: 45px auto;
-            padding: 30px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
-        h1 {
-            color: #285943;
-        }
-
-        input {
-            width: 100%;
-            padding: 11px;
-            margin-top: 6px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        button, .btn {
-            background: #285943;
-            color: white;
-            border: none;
-            padding: 11px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        button:hover, .btn:hover {
-            background: #39795a;
-        }
-
-        .message {
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            background: #e7f4e8;
-        }
-
-        .errorlist {
-            color: #c0392b;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #777;
-        }
-    </style>
-
+    <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
 </head>
 
 <body>
 
-    <nav>
+    <nav class="navbar">
 
-        <div class="logo">Kaon</div>
+        <a href="{% url 'dashboard' %}" class="logo">Kaon.</a>
 
-        <div>
+        <div class="nav-links">
 
             {% if user.is_authenticated %}
 
@@ -112,11 +28,13 @@
 
                 <form method="POST"
                       action="{% url 'logout' %}"
-                      style="display:inline;">
+                      class="logout-form">
 
                     {% csrf_token %}
 
-                    <button type="submit">Logout</button>
+                    <button type="submit" class="logout-button">
+                        Logout
+                    </button>
 
                 </form>
 
@@ -133,7 +51,7 @@
     </nav>
 
 
-    <div class="container">
+    <main class="page-container">
 
         {% if messages %}
 
@@ -148,14 +66,13 @@
         {% endif %}
 
         {% block content %}
-
         {% endblock %}
 
-    </div>
+    </main>
 
 
     <footer>
-        <p>Kaon – Track Your Filipino Food!</p>
+        <p>Kaon — Track Your Filipino Food!</p>
     </footer>
 
 </body>

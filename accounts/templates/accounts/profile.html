@@ -3,47 +3,159 @@
 
 {% block content %}
 
-<h1>My Profile</h1>
+<!-- PROFILE HEADER -->
+<div class="dashboard-header">
+
+    <div>
+        <p class="welcome-label">YOUR ACCOUNT</p>
+
+        <h1>My Profile</h1>
+
+        <p class="dashboard-subtitle">
+            Manage your personal information and account details.
+        </p>
+    </div>
+
+    {% if not edit_mode %}
+        <a href="{% url 'edit_profile' %}" class="btn">
+            Edit Profile
+        </a>
+    {% endif %}
+
+</div>
+
 
 {% if edit_mode %}
 
-    <h3>Edit Your Information</h3>
+    <!-- EDIT PROFILE -->
+    <div class="profile-edit-card">
 
-    <form method="POST">
+        <div class="profile-section-heading">
+            <div class="profile-avatar">✏️</div>
 
-        {% csrf_token %}
+            <div>
+                <h2>Edit Your Information</h2>
+                <p>Update your personal account details below.</p>
+            </div>
+        </div>
 
-        {{ user_form.as_p }}
+        <form method="POST">
 
-        {{ profile_form.as_p }}
+            {% csrf_token %}
 
-        <button type="submit">Save Changes</button>
+            <div class="profile-form-section">
 
-    </form>
+                <h3>Personal Information</h3>
 
-    <p>
-        <a href="{% url 'profile' %}">Cancel</a>
-    </p>
+                {{ user_form.as_p }}
+
+            </div>
+
+            <div class="profile-form-section">
+
+                <h3>Contact Information</h3>
+
+                {{ profile_form.as_p }}
+
+            </div>
+
+            <div class="profile-form-actions">
+
+                <button type="submit" class="btn">
+                    Save Changes
+                </button>
+
+                <a href="{% url 'profile' %}" class="btn-outline">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
 
 {% else %}
 
-    <p><strong>Username:</strong> {{ user.username }}</p>
+    <!-- PROFILE OVERVIEW -->
+    <div class="profile-overview">
 
-    <p><strong>First Name:</strong> {{ user.first_name }}</p>
+        <div class="profile-summary-card">
 
-    <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+            <div class="profile-avatar large">
+                {{ user.first_name|first|default:user.username|first|upper }}
+            </div>
 
-    <p><strong>Email:</strong> {{ user.email }}</p>
+            <h2>
+                {{ user.first_name|default:user.username }}
+                {{ user.last_name }}
+            </h2>
 
-    <p><strong>Contact Number:</strong> {{ profile.contact_number|default:"Not provided" }}</p>
+            <p class="profile-username">
+                @{{ user.username }}
+            </p>
 
-    <p><strong>Role:</strong> {{ profile.get_role_display }}</p>
+            <span class="profile-role">
+                {{ profile.get_role_display }}
+            </span>
 
-    <hr>
+        </div>
 
-    <a href="{% url 'edit_profile' %}" class="btn">
-        Edit Profile
-    </a>
+
+        <!-- PERSONAL DETAILS -->
+        <div class="profile-details-card">
+
+            <div class="profile-card-heading">
+                <h2>Personal Information</h2>
+                <span>👤</span>
+            </div>
+
+            <div class="profile-detail-row">
+                <div>
+                    <span class="detail-label">First Name</span>
+                    <p>{{ user.first_name|default:"Not provided" }}</p>
+                </div>
+            </div>
+
+            <div class="profile-detail-row">
+                <div>
+                    <span class="detail-label">Last Name</span>
+                    <p>{{ user.last_name|default:"Not provided" }}</p>
+                </div>
+            </div>
+
+            <div class="profile-detail-row">
+                <div>
+                    <span class="detail-label">Username</span>
+                    <p>{{ user.username }}</p>
+                </div>
+            </div>
+
+            <div class="profile-detail-row">
+                <div>
+                    <span class="detail-label">Email Address</span>
+                    <p>{{ user.email }}</p>
+                </div>
+            </div>
+
+            <div class="profile-detail-row">
+                <div>
+                    <span class="detail-label">Contact Number</span>
+                    <p>{{ profile.contact_number|default:"Not provided" }}</p>
+                </div>
+            </div>
+
+            <div class="profile-detail-row">
+                <div>
+                    <span class="detail-label">Account Role</span>
+                    <p>{{ profile.get_role_display }}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 {% endif %}
 
