@@ -54,7 +54,8 @@
 
 <div class="dashboard-grid">
 
-    <div class="dashboard-card">
+    <!-- CLICKABLE MEAL TRACKER -->
+    <a href="{% url 'meal_tracker' %}" class="dashboard-card dashboard-card-link">
 
         <div class="card-icon">🍚</div>
 
@@ -64,9 +65,10 @@
             Keep track of what you KAON.
         </p>
 
-    </div>
+    </a>
 
 
+    <!-- DAILY CALORIE GOAL -->
     <div class="dashboard-card">
 
         <div class="card-icon">🎯</div>
@@ -80,6 +82,7 @@
     </div>
 
 
+    <!-- TRACKING STREAK -->
     <div class="dashboard-card">
 
         <div class="card-icon">🔥</div>
