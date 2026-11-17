@@ -1,0 +1,284 @@
+
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<div class="meal-tracker-page">
+
+    <div class="meal-page-heading">
+        <div>
+            <p class="meal-eyebrow">YOUR DAILY NUTRITION</p>
+            <h1>Meal Tracker</h1>
+            <p>Track the Filipino food you eat every day.</p>
+        </div>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="meal-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- DAILY CALORIE SUMMARY -->
+    <section class="nutrition-summary">
+
+        <div class="nutrition-summary-heading">
+            <div>
+                <h2>Today's Nutrition</h2>
+                <p>Your nutritional intake for today.</p>
+            </div>
+
+            <form method="POST"
+                  action="{% url 'update_calorie_goal' %}"
+                  class="goal-form">
+
+                {% csrf_token %}
+
+                <label for="{{ goal_form.target_calories.id_for_label }}">
+                    Daily calorie goal
+                </label>
+
+                {{ goal_form.target_calories }}
+
+                <button type="submit" class="secondary-button">
+                    Save Goal
+                </button>
+
+            </form>
+        </div>
+
+        <div class="calorie-summary">
+
+            <div>
+                <span class="nutrition-label">Calories Consumed</span>
+                <h2>{{ total_calories|floatformat:0 }}</h2>
+                <span class="nutrition-unit">kcal</span>
+            </div>
+
+            <div>
+                <span class="nutrition-label">Daily Goal</span>
+                <h2>{{ calorie_goal.target_calories }}</h2>
+                <span class="nutrition-unit">kcal</span>
+            </div>
+
+            <div>
+                <span class="nutrition-label">Remaining</span>
+                <h2>{{ remaining_calories|floatformat:0 }}</h2>
+                <span class="nutrition-unit">kcal</span>
+            </div>
+
+        </div>
+
+        <div class="calorie-progress-track">
+            <div class="calorie-progress-fill"
+                 style="--progress: {{ calorie_percentage }}%;">
+            </div>
+        </div>
+
+        <p class="progress-caption">
+            {{ calorie_percentage|floatformat:0 }}% of your daily calorie goal
+        </p>
+
+    </section>
+
+
+    <!-- MACRONUTRIENTS -->
+    <section class="macro-grid">
+
+        <div class="macro-card">
+            <span>Protein</span>
+            <h2>{{ total_protein|floatformat:1 }}g</h2>
+        </div>
+
+        <div class="macro-card">
+            <span>Carbohydrates</span>
+            <h2>{{ total_carbohydrates|floatformat:1 }}g</h2>
+        </div>
+
+        <div class="macro-card">
+            <span>Fat</span>
+            <h2>{{ total_fat|floatformat:1 }}g</h2>
+        </div>
+
+    </section>
+
+
+    <!-- FOOD SEARCH -->
+    <section class="food-search-section">
+
+        <div class="section-heading">
+            <h2>Find Filipino Food</h2>
+            <p>Search for a dish and add it to your food log.</p>
+        </div>
+
+        <form method="GET"
+              action="{% url 'meal_tracker' %}"
+              class="food-search-form">
+
+            <input
+                type="text"
+                name="q"
+                value="{{ search_query }}"
+                placeholder="Search Filipino dishes..."
+            >
+
+            <button type="submit" class="primary-button">
+                Search
+            </button>
+
+        </form>
+
+
+        <div class="food-results">
+
+            {% for food in foods %}
+
+                <div class="food-result-card">
+
+                    <div class="food-result-info">
+
+                        <h3>{{ food.name }}</h3>
+
+                        <p>
+                            Serving: {{ food.serving_size }}
+                        </p>
+
+                        <div class="food-nutrition-preview">
+                            <span>
+                                {{ food.calories|floatformat:0 }} kcal
+                            </span>
+
+                            <span>
+                                Protein: {{ food.protein|floatformat:1 }}g
+                            </span>
+
+                            <span>
+                                Carbs: {{ food.carbohydrates|floatformat:1 }}g
+                            </span>
+
+                            <span>
+                                Fat: {{ food.fat|floatformat:1 }}g
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <form method="POST"
+                          action="{% url 'add_meal' %}"
+                          class="add-meal-form">
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="food"
+                            value="{{ food.id }}"
+                        >
+
+                        <label>Servings</label>
+
+                        <input
+                            type="number"
+                            name="servings"
+                            value="1"
+                            min="0.01"
+                            step="0.01"
+                            required
+                        >
+
+                        <button type="submit" class="primary-button">
+                            Add Meal
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty-food-state">
+
+                    {% if search_query %}
+                        <h3>No matching dishes found.</h3>
+                        <p>Try searching with a different food name.</p>
+                    {% else %}
+                        <h3>Your food database is empty.</h3>
+                        <p>
+                            Empty food database. Please reload the webpage.
+                        </p>
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- TODAY'S FOOD LOG -->
+    <section class="food-log-section">
+
+        <div class="section-heading">
+            <h2>Today's Food Log</h2>
+            <p>Meals you have recorded today.</p>
+        </div>
+
+        <div class="food-log-list">
+
+            {% for meal in meal_logs %}
+
+                <div class="food-log-item">
+
+                    <div>
+                        <h3>{{ meal.food.name }}</h3>
+
+                        <p>
+                            {{ meal.servings }} serving(s)
+                            × {{ meal.food.serving_size }}
+                        </p>
+                    </div>
+
+                    <div class="food-log-calories">
+
+                        <strong>
+                            {{ meal.total_calories|floatformat:0 }} kcal
+                        </strong>
+
+                        <form method="POST"
+                              action="{% url 'delete_meal' meal.id %}">
+
+                            {% csrf_token %}
+
+                            <button type="submit"
+                                    class="delete-meal-button">
+                                Remove
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="empty-food-state">
+                    <h3>No meals logged yet.</h3>
+                    <p>
+                        Search for a Filipino dish above to get started.
+                    </p>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}
